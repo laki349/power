@@ -2,791 +2,265 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Self-Development RPG (v5: Hardcore + Relics + Boss SVG)</title>
-  <style>
-    :root{
-      --bg:#0f1115; --card:#171a21; --muted:#8b949e; --text:#e6edf3; --accent:#58a6ff; --accent2:#3fb950; --warn:#ff7b72; --amber:#e3b341; --violet:#9b9eff;
-    }
-    *{box-sizing:border-box}
-    body{margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,Apple Color Emoji,Segoe UI Emoji;
-      background:linear-gradient(180deg,#0b0d12,#0f1115 30%,#0f1115 100%); color:var(--text)}
-    header{padding:24px 16px; text-align:center; border-bottom:1px solid #202632;
-      background:radial-gradient(1200px 400px at 50% -40%,rgba(88,166,255,.12),transparent)}
-    h1{margin:0 0 6px; font-weight:700; letter-spacing:.2px}
-    .sub{color:var(--muted); font-size:14px}
-    main{max-width:1240px; margin:24px auto; padding:0 16px 80px}
-    .grid{display:grid; gap:16px; grid-template-columns:1.1fr .9fr}
-    @media (max-width: 1000px){ .grid{grid-template-columns:1fr} }
-    .card{background:var(--card); border:1px solid #202632; border-radius:14px; padding:16px; box-shadow:0 10px 30px rgba(0,0,0,.25)}
-    .row{display:flex; gap:12px; align-items:center; flex-wrap:wrap}
-    .row > * { flex:1 }
-    .btn{background:var(--accent); color:#06111e; border:none; padding:10px 14px; border-radius:10px; font-weight:700; cursor:pointer; transition:.15s transform ease,.2s opacity ease}
-    .btn:hover{transform:translateY(-1px); opacity:.95}
-    .btn.secondary{background:#2d333b; color:var(--text)}
-    .btn.warn{background:var(--warn); color:#2a0c0c}
-    input, select{background:#0f131a; border:1px solid #243042; color:var(--text); padding:10px 12px; border-radius:10px}
-    label{font-size:13px; color:var(--muted)}
-    .kpis{display:grid; gap:12px; grid-template-columns:repeat(5,1fr)}
-    @media (max-width:900px){ .kpis{grid-template-columns:repeat(2,1fr)} }
-    .kpi{background:#11151c; border:1px solid #223146; padding:12px; border-radius:12px}
-    .kpi .v{font-size:22px; font-weight:800}
-    .bar{height:16px; background:#0d1117; border-radius:10px; border:1px solid #223146; overflow:hidden; position:relative}
-    .bar > span{display:block; height:100%; background:linear-gradient(90deg,#58a6ff,#3fb950); width:0}
-    .tiny{font-size:12px; color:var(--muted)}
-    .list{display:flex; flex-direction:column; gap:10px; max-height:320px; overflow:auto; padding-right:4px}
-    .activity{display:flex; align-items:center; gap:10px; background:#121720; border:1px solid #223146; padding:10px; border-radius:10px}
-    .activity .xp{font-weight:800; color:var(--accent2)}
-    .activity .cat{font-weight:700; color:#9b9eff; font-size:12px}
-    canvas{width:100%; height:220px; background:#0b0e13; border-radius:12px; border:1px solid #223146}
-    details{background:#11151c; border:1px solid #223146; border-radius:12px; padding:10px 12px}
-    summary{cursor:pointer; font-weight:700}
-    .badge{display:inline-block; padding:3px 8px; border:1px solid #2b3342; border-radius:999px; font-size:12px; color:#c7d2e1}
-    .pill{font-size:11px; background:#1b2230; border:1px solid #2b3342; padding:2px 6px; border-radius:999px; color:#9fb0c9}
-    .inv{display:flex; gap:8px; flex-wrap:wrap}
-    .inv .item{background:#121720; border:1px solid #223146; padding:8px 10px; border-radius:10px; font-size:12px}
-    /* Talent grid */
-    .talent-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px}
-    @media (max-width:900px){ .talent-grid{grid-template-columns:1fr} }
-    .talent{background:#121720; border:1px solid #223146; padding:10px; border-radius:10px}
-    .talent .tname{font-weight:800}
-    .talent .meta{font-size:11px; color:#9fb0c9}
-    .talent .rank{font-size:12px; color:#e3b341}
-    .talent.locked{opacity:.6}
-    .sp{font-weight:800; color:#e3b341}
-    /* Boss UI */
-    .statbar{height:14px; background:#0d1117; border-radius:10px; border:1px solid #223146; overflow:hidden; position:relative}
-    .statbar > span{display:block; height:100%; background:linear-gradient(90deg,#58a6ff,#3fb950); width:0}
-    .log{background:#0b0e13; border:1px solid #223146; border-radius:12px; padding:10px; max-height:220px; overflow:auto; font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size:12px; line-height:1.25}
-    .skill{display:flex; flex-direction:column; gap:4px; background:#121720; border:1px solid #223146; padding:8px; border-radius:10px; min-width:140px}
-    .skill.disabled{opacity:.5}
-    .skill .name{font-weight:800}
-    .skill .meta{font-size:11px; color:#9fb0c9}
-    .skill .use{margin-top:6px}
-    .bosswrap{display:flex; gap:12px; align-items:center}
-    .bossSvg{width:160px; height:120px; border:1px solid #223146; border-radius:10px; background:#0b0e13}
-  </style>
-
-  <link rel="manifest" href="manifest.webmanifest">
-  <meta name="theme-color" content="#0f1115">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Self-Dev RPG v6 — Dynamic EXP + PWA</title>
+  <link rel="manifest" href="/power/manifest.webmanifest">
+  <meta name="theme-color" content="#0b0f14"/>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Self-Dev RPG">
-  <link rel="apple-touch-icon" href="icons/icon-192.png">
-
+  <link rel="apple-touch-icon" href="/power/icons/icon-192.png">
+  <style>
+    :root{--bg:#0b0f14;--card:#121922;--muted:#8aa0b3;--text:#e9f0f7;--acc:#61c0ff;--acc2:#58e38b;--warn:#ff7b72;--amber:#ffd166;}
+    *{box-sizing:border-box} body{margin:0;background:radial-gradient(1000px 400px at 50% -20%,rgba(97,192,255,.12),transparent),#0b0f14;color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial}
+    header{position:sticky;top:0;z-index:20;backdrop-filter:saturate(180%) blur(8px);background:rgba(11,15,20,.7);border-bottom:1px solid #1d2733}
+    .wrap{max-width:1200px;margin:0 auto;padding:16px}
+    h1{margin:0;font-size:22px;display:flex;align-items:center;gap:10px}
+    .tag{font-size:12px;border:1px solid #263445;background:#111826;padding:3px 8px;border-radius:999px;color:#a6bed1}
+    main{max-width:1200px;margin:18px auto;display:grid;grid-template-columns:1.1fr .9fr;gap:16px;padding:0 12px}
+    @media (max-width:1000px){main{grid-template-columns:1fr}}
+    .card{background:var(--card);border:1px solid #1d2733;border-radius:16px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .btn{padding:10px 14px;border:none;border-radius:12px;font-weight:700;cursor:pointer;background:linear-gradient(90deg,var(--acc),#6be0ff);color:#001018;transition:.15s transform ease}
+    .btn:hover{transform:translateY(-1px)}
+    .btn.secondary{background:#1a2430;color:#d7e6f3}
+    .btn.ghost{background:transparent;border:1px solid #2a3949;color:#bcd0df}
+    .btn.warn{background:var(--warn);color:#210707}
+    input,select{background:#0f151d;border:1px solid #263445;color:var(--text);padding:10px 12px;border-radius:12px}
+    .kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+    @media (max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}}
+    .kpi{background:#0f151d;border:1px solid #223146;border-radius:14px;padding:12px}
+    .kpi .v{font-size:22px;font-weight:800}
+    .bar{height:14px;background:#0a0f14;border:1px solid #243242;border-radius:999px;overflow:hidden}
+    .bar > span{display:block;height:100%;background:linear-gradient(90deg,#61c0ff,#58e38b);width:0}
+    .mini{font-size:12px;color:var(--muted)}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:800px){.grid2{grid-template-columns:1fr}}
+    .list{display:flex;flex-direction:column;gap:8px;max-height:320px;overflow:auto}
+    .pill{font-size:11px;background:#0f151d;border:1px solid #243242;color:#a8becf;padding:3px 8px;border-radius:999px}
+    .badge{display:inline-block;font-size:12px;border:1px solid #2a3949;background:#101822;color:#cfe6f7;padding:4px 8px;border-radius:999px}
+    .activity{display:flex;align-items:center;gap:10px;background:#101825;border:1px solid #223146;padding:10px;border-radius:12px}
+    .xp{font-weight:800;color:var(--acc2)}
+    canvas{width:100%;height:220px;background:#0b0f14;border:1px solid #223146;border-radius:12px}
+    .sectionTitle{margin:0 0 8px;font-size:18px;font-weight:800;letter-spacing:.2px}
+    .talent{background:#101825;border:1px solid #223146;border-radius:12px;padding:12px}
+    .talent .name{font-weight:800}
+    .talent .meta{font-size:12px;color:#a3bbcf}
+    .skills{display:flex;gap:10px;flex-wrap:wrap}
+    .skill{background:#101825;border:1px solid #223146;border-radius:12px;padding:10px;min-width:150px}
+    .skill.disabled{opacity:.55}
+    .statbar{height:12px;background:#0a0f14;border:1px solid #223146;border-radius:10px;overflow:hidden}
+    .statbar > span{display:block;height:100%;background:linear-gradient(90deg,#61c0ff,#58e38b);width:0}
+    .bossSvg{width:160px;height:120px;border:1px solid #223146;border-radius:12px;background:#0b0f14}
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:50}
+    .sheet{background:#0f151d;border:1px solid #223146;border-radius:16px;max-width:520px;width:92%;padding:16px}
+    .sheet h3{margin:0 0 8px}
+  </style>
 </head>
 <body>
   <header>
-    <h1>Self-Development RPG</h1>
-    <div class="sub">v5 Hardcore: 상성 보스·레벨다운·유물/포션·경험치 증폭 특성/스킬 + SVG 보스</div>
-  </header>
-  <main>
-    <div class="grid">
-      <section class="card">
-        <h2 style="margin:4px 0 12px">대시보드</h2>
-        <div class="kpis">
-          <div class="kpi"><div class="tiny">레벨</div><div class="v" id="levelVal">1</div></div>
-          <div class="kpi"><div class="tiny">총 XP</div><div class="v" id="xpVal">0</div></div>
-          <div class="kpi"><div class="tiny">오늘 XP</div><div class="v" id="todayVal">0</div></div>
-          <div class="kpi"><div class="tiny">스트릭</div><div class="v" id="streakVal">0</div></div>
-          <div class="kpi"><div class="tiny">SP</div><div class="v sp" id="spVal">0</div></div>
-        </div>
-        <div style="margin:14px 0 6px" class="tiny">레벨 진행도</div>
-        <div class="bar"><span id="progress"></span></div>
-        <div class="row" style="margin-top:14px">
-          <span class="pill">감소: <span id="decayRateTxt"></span>/h</span>
-          <span class="pill">목표: <span id="goalTxt"></span></span>
-          <span class="pill">소프트캡: <span id="capTxt"></span></span>
-          <button class="btn secondary" id="decayNow" style="flex:0 0 auto">지금 감소</button>
-          <button class="btn warn" id="hardReset" style="flex:0 0 auto">모두 초기화</button>
-        </div>
-        <div class="tiny" id="xpBuffInfo">경험치 버프: 없음</div>
-      </section>
-
-      <section class="card">
-        <h2 style="margin:4px 0 12px">설정 (하드코어 프리셋)</h2>
-        <div class="row" style="gap:10px">
-          <div>
-            <label>레벨 곡선</label>
-            <select id="curveSel">
-              <option value="quad" selected>제곱형 (100·L²)</option>
-              <option value="lin">선형형 (100·L)</option>
-              <option value="exp">지수형 (~1.4^L)</option>
-            </select>
-          </div>
-          <div>
-            <label>감소(시간당)</label>
-            <input type="number" id="decayPerHour" min="0" value="4"/>
-          </div>
-          <div>
-            <label>하루 목표 XP</label>
-            <input type="number" id="dailyGoal" min="0" value="180"/>
-          </div>
-          <div>
-            <label>일간 소프트캡</label>
-            <input type="number" id="dailyCap" min="0" value="480"/>
-          </div>
-          <button class="btn" id="saveCfg" style="flex:0 0 auto">저장</button>
-        </div>
-        <div class="tiny" style="margin-top:8px">
-          하드코어 규칙: 3일 연속 미달 → <b>레벨 다운</b> (이전 레벨 경계로 롤백) · 주간 5일 목표 달성 → <b>유물 1개</b> 지급.
-        </div>
-      </section>
+    <div class="wrap row" style="justify-content:space-between">
+      <h1>Self‑Dev RPG <span class="tag">v6</span></h1>
+      <div class="row" style="gap:8px">
+        <span class="pill">오프라인 지원</span>
+        <span class="pill">자기보고형 EXP</span>
+      </div>
     </div>
+  </header>
 
-    <section class="card" style="margin-top:16px">
-      <div style="display:flex; align-items:center; gap:8px; justify-content:space-between">
-        <h2 style="margin:4px 0 12px">활동 기록</h2>
-        <span class="badge" id="todayBadge">오늘: -</span>
+  <main>
+    <section class="card">
+      <div class="sectionTitle">대시보드</div>
+      <div class="kpis">
+        <div class="kpi"><div class="mini">레벨</div><div class="v" id="levelVal">1</div></div>
+        <div class="kpi"><div class="mini">총 XP</div><div class="v" id="xpVal">0</div></div>
+        <div class="kpi"><div class="mini">오늘 XP</div><div class="v" id="todayVal">0</div></div>
+        <div class="kpi"><div class="mini">스트릭</div><div class="v" id="streakVal">0</div></div>
+        <div class="kpi"><div class="mini">SP</div><div class="v" id="spVal">0</div></div>
       </div>
-      <div class="row" style="margin-bottom:8px">
-        <input id="newName" placeholder="활동 이름 (예: 책 읽기 30분)"/>
-        <select id="newCat">
-          <option value="mind">마인드</option>
-          <option value="body">바디</option>
-          <option value="skill">스킬</option>
-          <option value="social">소셜</option>
-          <option value="recovery">회복</option>
-        </select>
-        <input id="newXP" type="number" min="1" value="30"/>
-        <button class="btn" id="addAct" style="flex:0 0 auto">활동 추가</button>
+      <div class="mini" style="margin:10px 0 6px">레벨 진행도</div>
+      <div class="bar"><span id="progress"></span></div>
+      <div class="row" style="margin-top:10px">
+        <span class="pill">감소: <span id="decayRateTxt"></span>/h</span>
+        <span class="pill">목표: <span id="goalTxt"></span></span>
+        <span class="pill">소프트캡: <span id="capTxt"></span></span>
+        <button class="btn secondary" id="decayNow" style="flex:0 0 auto">지금 감소</button>
+        <button class="btn warn" id="hardReset" style="flex:0 0 auto">초기화</button>
       </div>
-      <div class="tiny" style="margin:4px 0 10px">
-        권장 XP: 독서30분=30 · 공부30=35 · 운동40=40 · 프로젝트60=60 · 글쓰기30=40 · 명상10=20
-      </div>
-      <div class="list" id="actList"></div>
+      <div class="mini" id="xpBuffInfo">경험치 버프: 없음</div>
+      <div class="mini" style="margin-top:6px">하드코어: 3일 연속 미달 → <b>레벨 다운</b> · 7일 중 5일 달성 → <b>유물</b></div>
     </section>
 
-    <div class="grid" style="margin-top:16px">
-      <section class="card">
-        <h2 style="margin:4px 0 12px">보스전 (상성·유물 지원)</h2>
-        <div class="tiny" id="bossHint">오늘 최다 카테고리에 보스 약점이 생김(대미지 +15%).</div>
-        <div class="bosswrap" style="margin:8px 0">
-          <svg id="bossSvg" class="bossSvg" viewBox="0 0 160 120"></svg>
-          <div style="flex:1">
-            <div class="tiny">플레이어 HP</div>
-            <div class="statbar"><span id="pHP"></span></div>
-            <div class="tiny" id="pHPtxt"></div>
-            <div class="tiny" style="margin-top:8px">보스 HP</div>
-            <div class="statbar"><span id="bHP"></span></div>
-            <div class="tiny" id="bHPtxt"></div>
-          </div>
+    <section class="card">
+      <div class="sectionTitle">설정</div>
+      <div class="grid2">
+        <div class="row">
+          <label class="mini">레벨 곡선</label>
+          <select id="curveSel">
+            <option value="quad" selected>제곱형 (100·L²)</option>
+            <option value="lin">선형형 (100·L)</option>
+            <option value="exp">지수형 (~1.4^L)</option>
+          </select>
         </div>
-        <div class="row" id="skills"></div>
-        <div class="row" style="margin-top:10px">
-          <button class="btn" id="startBoss" style="flex:0 0 auto">보스 소환</button>
-          <span id="bossName" class="pill">보스: 없음</span>
-          <span id="bossInfo" class="pill">-</span>
-        </div>
-        <div class="log" id="combatLog" style="margin-top:10px; min-height:120px"></div>
-        <div style="margin-top:8px">
-          <div class="tiny">인벤토리(유물/포션)</div>
-          <div class="inv" id="inventory"></div>
-        </div>
-      </section>
+        <div class="row"><label class="mini">감소(시간당)</label><input type="number" id="decayPerHour" value="4" min="0"></div>
+        <div class="row"><label class="mini">하루 목표</label><input type="number" id="dailyGoal" value="180" min="0"></div>
+        <div class="row"><label class="mini">일간 소프트캡</label><input type="number" id="dailyCap" value="480" min="0"></div>
+      </div>
+      <div class="row" style="margin-top:8px"><button class="btn" id="saveCfg" style="flex:0 0 auto">저장</button></div>
+    </section>
 
-      <section class="card">
-        <h2 style="margin:4px 0 12px">스킬 트리(특성)</h2>
-        <div class="tiny">레벨업 시 <b>SP</b> 지급. 특성은 <b>패시브</b>, 일부는 <b>경험치 증폭</b> 제공.</div>
-        <div class="row" style="margin-top:8px">
-          <span class="pill">보유 SP: <span id="spBadge">0</span></span>
-          <button class="btn secondary" id="resetTalents" style="flex:0 0 auto">특성 초기화</button>
-        </div>
-        <div class="talent-grid" id="talentGrid" style="margin-top:10px"></div>
-      </section>
-    </div>
+    <section class="card">
+      <div class="sectionTitle">활동 기록 — 자유 입력</div>
+      <div class="row">
+        <button class="btn" id="openCalc" style="flex:0 0 auto">계산식으로 기록</button>
+        <button class="btn ghost" id="openFree" style="flex:0 0 auto">직접 XP 입력</button>
+        <span class="badge" id="todayBadge">오늘: 0</span>
+      </div>
+      <div class="list" id="logList" style="margin-top:8px"></div>
+    </section>
 
-    <section class="card" style="margin-top:16px">
-      <h2 style="margin:4px 0 12px">진행 추이</h2>
-      <canvas id="chart" width="1240" height="260"></canvas>
-      <div class="tiny" style="margin-top:6px">최근 30일 총 XP.</div>
+    <section class="card">
+      <div class="sectionTitle">보스전</div>
+      <div class="mini" id="bossHint">오늘 최다 카테고리에 보스 약점(+15%).</div>
+      <div class="row" style="align-items:flex-start">
+        <svg id="bossSvg" class="bossSvg" viewBox="0 0 160 120"></svg>
+        <div style="flex:1">
+          <div class="mini">플레이어 HP</div><div class="statbar"><span id="pHP"></span></div><div class="mini" id="pHPtxt"></div>
+          <div class="mini" style="margin-top:6px">보스 HP</div><div class="statbar"><span id="bHP"></span></div><div class="mini" id="bHPtxt"></div>
+        </div>
+      </div>
+      <div class="skills" id="skills" style="margin-top:8px"></div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn" id="startBoss" style="flex:0 0 auto">보스 소환</button>
+        <span class="pill" id="bossName">보스: 없음</span>
+        <span class="pill" id="bossInfo">-</span>
+      </div>
+      <div class="card" style="margin-top:10px;background:#0f151d"><div class="mini">전투 기록</div><div id="combatLog" class="mini" style="white-space:pre-line;max-height:180px;overflow:auto"></div></div>
+    </section>
+
+    <section class="card">
+      <div class="sectionTitle">스킬 트리</div>
+      <div id="talentGrid" class="grid2"></div>
+      <div class="row" style="margin-top:10px">
+        <span class="pill">보유 SP: <b id="spBadge">0</b></span>
+        <button class="btn secondary" id="resetTalents" style="flex:0 0 auto">특성 초기화</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="sectionTitle">추이</div>
+      <canvas id="chart" width="1200" height="240"></canvas>
     </section>
   </main>
 
+  <!-- Calculator Modal -->
+  <div class="modal" id="modalCalc">
+    <div class="sheet">
+      <h3>계산식으로 기록</h3>
+      <div class="row">
+        <select id="calcType">
+          <option value="study">공부</option>
+          <option value="workout">운동</option>
+          <option value="meditation">명상</option>
+          <option value="reading">독서</option>
+          <option value="project">프로젝트</option>
+          <option value="journaling">저널링/글쓰기</option>
+          <option value="routine">루틴 유지</option>
+        </select>
+        <input id="metric" type="number" placeholder="수치(분/페이지/문단/%)" min="0">
+        <select id="intensity">
+          <option value="1">강도/집중 1</option>
+          <option value="2" selected>2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <select id="calcCat">
+          <option value="mind">지적 성장</option>
+          <option value="body">신체 성장</option>
+          <option value="spirit">정신 안정</option>
+          <option value="create">창조 활동</option>
+          <option value="social">사회 관계</option>
+          <option value="reflect">자기 성찰</option>
+          <option value="system">관리</option>
+          <option value="finance">재정</option>
+          <option value="persona">자기 표현</option>
+          <option value="recovery">회복</option>
+        </select>
+        <input id="memo" placeholder="메모(선택)"/>
+      </div>
+      <div class="row" style="margin-top:8px;justify-content:flex-end">
+        <button class="btn ghost" id="closeCalc" style="flex:0 0 auto">닫기</button>
+        <button class="btn" id="calcSubmit" style="flex:0 0 auto">XP 기록</button>
+      </div>
+      <div class="mini" style="margin-top:8px">예) 공부 120분 · 집중 4 → 자동 계산</div>
+    </div>
+  </div>
+
+  <!-- Free Modal -->
+  <div class="modal" id="modalFree">
+    <div class="sheet">
+      <h3>직접 XP 입력</h3>
+      <div class="row">
+        <input id="freeName" placeholder="활동 이름(예: 마케팅 분석)"/>
+        <select id="freeCat">
+          <option value="mind">지적 성장</option>
+          <option value="body">신체 성장</option>
+          <option value="spirit">정신 안정</option>
+          <option value="create">창조 활동</option>
+          <option value="social">사회 관계</option>
+          <option value="reflect">자기 성찰</option>
+          <option value="system">관리</option>
+          <option value="finance">재정</option>
+          <option value="persona">자기 표현</option>
+          <option value="recovery">회복</option>
+        </select>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <input id="freeXP" type="number" placeholder="XP (직접 입력)" min="0"/>
+        <input id="freeMemo" placeholder="메모(선택)"/>
+      </div>
+      <div class="row" style="margin-top:8px;justify-content:flex-end">
+        <button class="btn ghost" id="closeFree" style="flex:0 0 auto">닫기</button>
+        <button class="btn" id="freeSubmit" style="flex:0 0 auto">XP 기록</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // ===== Base utils =====
+    const storeKey = 'sdrpg_v6';
     const nowTs = ()=> Date.now();
-    const dayKey = (t)=> new Date(t).toISOString().slice(0,10);
+    const dayKey = t => new Date(t).toISOString().slice(0,10);
     const clamp = (x,a,b)=> Math.min(b, Math.max(a,x));
-    const rnd = (a,b)=> Math.floor(a + Math.random()*(b-a+1));
-
-    // ===== Storage =====
-    const store = {
-      get(){ try{ return JSON.parse(localStorage.getItem('sdrpg_v5')||'{}'); }catch(e){ return {}; } },
-      set(data){ localStorage.setItem('sdrpg_v5', JSON.stringify(data)); },
-      patch(p){ const d = store.get(); Object.assign(d, p); store.set(d); }
-    };
-
-    // ===== Defaults =====
-    const defaults = {
-      xp: 0, lastUpdate: nowTs(), lastActivityDay: dayKey(nowTs()), lastLevel: 1, sp: 0, streak: 0,
-      missStreak: 0, weeklyHits: {}, // dayKey->bool for goal achieved
-      activities: [
-        { id: crypto.randomUUID(), name: "책 읽기 (30분)", xp: 30, cat: "mind", lastLog: 0 },
-        { id: crypto.randomUUID(), name: "공부 (30분)", xp: 35, cat: "mind", lastLog: 0 },
-        { id: crypto.randomUUID(), name: "운동 (40분)", xp: 40, cat: "body", lastLog: 0 },
-        { id: crypto.randomUUID(), name: "프로젝트(코딩) (60분)", xp: 60, cat: "skill", lastLog: 0 },
-        { id: crypto.randomUUID(), name: "글쓰기 (30분)", xp: 40, cat: "skill", lastLog: 0 },
-        { id: crypto.randomUUID(), name: "명상 (10분)", xp: 20, cat: "recovery", lastLog: 0 }
-      ],
-      cfg: { decayPerHour: 4, curve: "quad", dailyGoal: 180, dailyCap: 480 },
-      history: {}, daily: {}, bosses:{ defeated:{}, lastRewardAt:{} }, badges: [],
-      talents: {}, passives: { mindBoost:0, bodyBoost:0, skillBoost:0, socialBoost:0, recoveryBoost:0,
-                               decayDown:0, capUp:0, bossAtkUp:0, critUp:0, cdReduce:0,
-                               metaBonus:0, xpGlobal:0 },
-      inventory: { "집중 포션":0, "힘의 엘릭서":0, "타임 캡슐":0 },
-      xpBuffUntil: 0
-    };
-    let state = initState();
-
-    function initState(){
-      let d = store.get();
-      if(!d || Object.keys(d).length===0){ store.set(defaults); return defaults; }
-      d.cfg = Object.assign({}, defaults.cfg, d.cfg||{});
-      d.history ||= {}; d.daily ||= {}; d.bosses ||= { defeated:{}, lastRewardAt:{} };
-      d.badges ||= []; d.talents ||= {}; d.passives ||= JSON.parse(JSON.stringify(defaults.passives));
-      d.activities = (d.activities||[]).map(a=>({ lastLog:0, cat:a.cat||"mind", ...a }));
-      d.streak ??= 0; d.sp ??= 0; d.lastLevel ??= 1; d.missStreak ??= 0; d.weeklyHits ||= {};
-      d.inventory = Object.assign({}, defaults.inventory, d.inventory||{});
-      d.xpBuffUntil ??= 0;
-      d.xp ??= 0; d.lastActivityDay ||= dayKey(nowTs()); d.lastUpdate ||= nowTs();
-      store.set(d); return d;
-    }
-
-    // ===== Level math =====
-    function levelFromXP(xp, curve){
-      if (curve==="lin"){ const L = Math.max(1, Math.floor(xp/100)+1); return { L, prevAt:(L-1)*100, nextAt:L*100 }; }
-      if (curve==="exp"){
-        let L=1, next=120, acc=0; while (acc+next<=xp && L<200){ acc+=next; L++; next=Math.round(next*1.4); }
-        return { L, prevAt:acc, nextAt:acc+next };
-      }
-      let L=1; while (100*(L**2) <= xp && L<999){ L++; } return { L, prevAt:100*((L-1)**2), nextAt:100*(L**2) };
-    }
-    function setXP(newXP){ const d = store.get(); d.xp = Math.max(0, newXP); store.set(d); state=d; }
-
-    // ===== Talents =====
-    const Talents = [
-      // Productivity (per-category +10%/rank, max3)
-      { id:"mindBoost", name:"지식 증폭", group:"생산성", desc:"+10% 마인드 XP/랭크 (최대3)", max:3, cost:1 },
-      { id:"bodyBoost", name:"피지컬 향상", group:"생산성", desc:"+10% 바디 XP/랭크 (최대3)", max:3, cost:1 },
-      { id:"skillBoost", name:"스킬 마스터리", group:"생산성", desc:"+10% 스킬 XP/랭크 (최대3)", max:3, cost:1 },
-      { id:"socialBoost", name:"커넥션 강화", group:"생산성", desc:"+10% 소셜 XP/랭크 (최대3)", max:3, cost:1 },
-      { id:"recoveryBoost", name:"회복력", group:"생산성", desc:"+10% 회복 XP/랭크 (최대3)", max:3, cost:1 },
-      // Utility
-      { id:"decayDown", name:"관성 제어", group:"유틸리티", desc:"감소율 -10%/랭크 (최대3)", max:3, cost:1 },
-      { id:"capUp", name:"일일 한계 확장", group:"유틸리티", desc:"소프트캡 +50/랭크 (최대3)", max:3, cost:1 },
-      { id:"metaBonus", name:"메타 집중", group:"유틸리티", desc:"일일 목표 보너스율 +5%p/랭크 (기본 20% → 최대 35%)", max:3, cost:1 },
-      { id:"xpGlobal", name:"학자의 통찰", group:"유틸리티", desc:"획득 XP 전체 +5%/랭크 (최대3)", max:3, cost:2 },
-      // Combat
-      { id:"bossAtkUp", name:"전투 숙련", group:"전투", desc:"보스전 ATK +2/랭크 (최대3)", max:3, cost:1 },
-      { id:"critUp", name:"정밀 타격", group:"전투", desc:"치확 +5%p/랭크 (최대3)", max:3, cost:1 },
-      { id:"cdReduce", name:"리듬 최적화", group:"전투", desc:"스킬 쿨타임 -1턴/랭크 (최대2, 비용2SP)", max:2, cost:2 }
-    ];
-
-    function recalcPassives(){
-      const d = store.get();
-      const p = JSON.parse(JSON.stringify(defaults.passives));
-      for (const t of Talents){
-        const r = d.talents[t.id]||0; if (!r) continue;
-        p[t.id] = r;
-      }
-      d.passives = p; store.set(d); state=d;
-    }
-
-    function gainSPOnLevelUp(){
-      const d = store.get();
-      const L = levelFromXP(d.xp, d.cfg.curve).L;
-      if (L > (d.lastLevel||1)){
-        const gain = L - (d.lastLevel||1);
-        d.sp = (d.sp||0) + gain; d.lastLevel = L; store.set(d); state=d;
-      }
-    }
-
-    // ===== Day helpers =====
-    function ensureDay(dk){
-      const d = store.get();
-      d.daily[dk] = d.daily[dk] || { total:0, catTotals:{mind:0,body:0,skill:0,social:0,recovery:0}, logs:0, goalHit:false };
-      store.set(d); return d.daily[dk];
-    }
-    function topCategoryToday(){
-      const d = store.get(); const day = ensureDay(dayKey(nowTs())); const ct = day.catTotals;
-      let best="mind", val=-1; for (const k of Object.keys(ct)){ if (ct[k]>val){ val=ct[k]; best=k; } }
-      return best;
-    }
-
-    // ===== XP calc & decay =====
-    const CAT_MULT = { mind:1.0, body:1.0, skill:1.0, social:0.95, recovery:0.85 };
-    const DR_THRESHOLD = 150; const DR_RATE = 0.5;
-    const ANTISPAM_MIN_MS = 10*60*1000;
-    const SOFTCAP_RATE = 0.5;
-    const GOAL_BONUS_RATE_BASE = 0.2;
-    const INACTIVITY_PENALTY = 20; // a bit harsher in hardcore
-
-    function applyDecay(){
-      const d = store.get();
-      const now = nowTs();
-      const elapsedMs = Math.max(0, now - (d.lastUpdate||now));
-      const hours = elapsedMs/3600000;
-      const decayMult = 1 - 0.1 * (d.passives?.decayDown||0);
-      const decPerHr = Number(d.cfg?.decayPerHour ?? 4) * Math.max(0.1, decayMult);
-      const dec = Math.max(0, hours*decPerHr);
-      d.xp = Math.max(0, (d.xp||0) - dec);
-      d.lastUpdate = now;
-      store.set(d); state=d;
-    }
-
-    function xpGainMultiplierGlobal(){
-      const d = store.get();
-      const ranks = d.passives?.xpGlobal||0;
-      const timeBuff = (d.xpBuffUntil||0) > nowTs() ? 0.2 : 0; // 20% for active buff
-      return (1 + 0.05*ranks) * (1 + timeBuff);
-    }
-
-    function computeEffectiveXP(act){
-      const d = store.get(); const today = dayKey(nowTs()); const day = ensureDay(today);
-      let base = Number(act.xp||0);
-      base = base * (CAT_MULT[act.cat]||1.0);
-      // category talent
-      const map = { mind:"mindBoost", body:"bodyBoost", skill:"skillBoost", social:"socialBoost", recovery:"recoveryBoost" };
-      base *= (1 + 0.10*(d.passives?.[map[act.cat]]||0));
-      // Diminishing returns
-      const curCat = day.catTotals[act.cat]||0; const room = Math.max(0, DR_THRESHOLD - curCat);
-      let eff = 0; if (base <= room) eff = base; else eff = room + (base - room)*DR_RATE;
-      // Streak
-      const streak = d.streak||0; eff *= clamp(1 + 0.05*streak, 1, 1.5);
-      // Anti-spam
-      const now = nowTs(); const recent = (now - (act.lastLog||0)) < ANTISPAM_MIN_MS; if (recent) eff *= 0.3;
-      // Global XP gain multipliers (talent + time buff)
-      eff *= xpGainMultiplierGlobal();
-      // Soft cap
-      const cap = (d.cfg.dailyCap||480) + 50*(d.passives?.capUp||0);
-      const roomDay = Math.max(0, cap - day.total);
-      if (eff > roomDay) eff = roomDay + (eff - roomDay)*SOFTCAP_RATE;
-      return { eff, recent };
-    }
-
-    function logActivity(act){
-      applyDecay();
-      const d = store.get(); const today = dayKey(nowTs()); const day = ensureDay(today);
-      if (d.lastActivityDay !== today){
-        const yesterday = dayKey(Date.now()-86400000);
-        d.streak = (d.lastActivityDay === yesterday) ? (d.streak||0)+1 : 1;
-        d.lastActivityDay = today;
-      }
-      const { eff, recent } = computeEffectiveXP(act);
-      d.xp = Math.max(0, d.xp + eff);
-      day.total += eff; day.catTotals[act.cat] = (day.catTotals[act.cat]||0) + eff; day.logs += 1;
-      act.lastLog = nowTs();
-      d.history[today] = Math.round(d.xp);
-      store.set(d); state=d;
-      gainSPOnLevelUp();
-      renderAll();
-      alert(`+${Math.round(eff)} XP ${recent?"(안티스팸 30%)":""}`);
-    }
-
-    // ===== Day rollover: goal bonus, level-down, weekly relics =====
-    function endOfDayProcess(prevDayKey){
-      const d = store.get(); const day = d.daily[prevDayKey] || {total:0, logs:0};
-      const metaBonus = (d.passives?.metaBonus||0) * 0.05; // per rank
-      const goal = d.cfg.dailyGoal||180;
-      if (day.total >= goal){
-        d.xp += goal * (GOAL_BONUS_RATE_BASE + metaBonus);
-        d.weeklyHits[prevDayKey] = true;
-        d.missStreak = 0;
-      }else{
-        d.missStreak = (d.missStreak||0) + 1;
-        if (day.logs===0){ d.xp = Math.max(0, d.xp - INACTIVITY_PENALTY); }
-        if (d.missStreak >= 3){
-          // Level down: roll back to previous level threshold
-          const L = levelFromXP(d.xp, d.cfg.curve).L;
-          const prevAt = levelFromXP(d.xp, d.cfg.curve).prevAt;
-          const prevprevAt = (L>2) ? levelFromXP(prevAt-1, d.cfg.curve).prevAt : 0;
-          d.xp = Math.max(prevprevAt, prevAt); // roll back to lower boundary
-          d.missStreak = 0;
-          d.badges.push(`Level Down (${new Date().toLocaleDateString()})`);
-        }
-      }
-      d.history[prevDayKey] = Math.round(d.xp);
-      // weekly rewards check (last 7 days)
-      const days = Object.keys(d.weeklyHits).sort().slice(-7);
-      const hitCount = days.filter(k=>d.weeklyHits[k]).length;
-      if (hitCount >= 5){
-        // grant a random relic
-        const items = ["집중 포션","힘의 엘릭서","타임 캡슐"];
-        const it = items[rnd(0,items.length-1)];
-        d.inventory[it] = (d.inventory[it]||0) + 1;
-        d.badges.push(`Relic: ${it} (${new Date().toLocaleDateString()})`);
-        // reset week
-        d.weeklyHits = {};
-      }
-      store.set(d); state=d;
-    }
-
-    // ===== Boss & Skills =====
-    const Skills = [
-      { id:"S1", name:"집중 일격", unlockL:3, mult:1.6, cd:1, desc:"1.6배" },
-      { id:"S2", name:"루틴 폭발", unlockL:5, mult:2.2, cd:2, desc:"2.2배" },
-      { id:"S3", name:"깊은 몰입", unlockL:8, mult:1.2, cd:0, effect:"다음 2턴 치확 +20% (최대 50%)" },
-      { id:"S4", name:"지식 폭풍", unlockL:12, mult:3.0, cd:3, desc:"3.0배" },
-      // Active XP boost skill: grants 30min global +20% XP gain (out of combat)
-      { id:"S5", name:"모멘텀 배너", unlockL:10, mult:0.8, cd:2, effect:"30분간 활동 XP +20%", tag:"xpboost" }
-    ];
-
-    function cdWithPassive(base){ const r = store.get().passives?.cdReduce||0; return Math.max(0, (base||0) - r); }
-    function tierFromLevel(L){ return Math.max(1, Math.floor(L/3)); }
-    function playerStats(){
-      const d = store.get(); const L = levelFromXP(d.xp, d.cfg.curve).L;
-      const hp = 100 + 10*L + 2*(d.streak||0);
-      const atk = 5 + L + 2*(d.passives?.bossAtkUp||0);
-      const critBase = Math.min(0.5, Math.min(0.2, 0.02*(d.streak||0)) + 0.05*(d.passives?.critUp||0));
-      return { L, hp, atk, critBase };
-    }
-    function bossStats(L){
-      const tier = tierFromLevel(L);
-      const hp = 120 + 40*(tier*tier);
-      const atk = 4 + 2*tier;
-      return { tier, hp, atk };
-    }
-
-    let combat = null; // { tier, bossHP, bossMax, pHP, pMax, turn, cds:{}, buffCritTurns, weakCat }
-    function startBoss(){
-      applyDecay();
-      const d = store.get();
-      const { L, hp } = playerStats();
-      const b = bossStats(L);
-      combat = { tier:b.tier, bossHP:b.hp, bossMax:b.hp, pHP:hp, pMax:hp, turn:1, cds:{}, buffCritTurns:0, weakCat: topCategoryToday() };
-      setText("combatLog", `[보스 소환] (보스) Tier ${b.tier} 등장! HP ${b.hp} · 약점:${combat.weakCat}\n`);
-      setText("bossName", `보스: Tier ${b.tier}`);
-      setText("bossInfo", `보상 예상: ${30*b.tier} XP`);
-      drawBossSVG(b.tier);
-      updateBars(); renderSkills(); renderInventory();
-    }
-
-    function endFight(win){
-      const d = store.get(); const t = combat.tier;
-      let log = getText("combatLog");
-      if (win){
-        const last = d.bosses.lastRewardAt[t]||0; const dayMs = 86400000;
-        let rewardable = (nowTs()-last >= dayMs);
-        let reward = 30*t;
-        log += `\n[승리] Tier ${t} 격파!`;
-        if (rewardable){ d.xp += reward; d.bosses.lastRewardAt[t] = nowTs(); d.badges.push(`Boss T${t} (${new Date().toLocaleDateString()})`); log += ` 보상 +${reward} XP`; }
-        else { log += ` 보상 대기(24h 제한)`; }
-        d.bosses.defeated[t] = true; store.set(d); state=d; gainSPOnLevelUp();
-      } else { log += `\n[패배] 다시 도전!`; }
-      setText("combatLog", log+"\n"); combat=null; updateBars(); renderSkills(); renderKPIs();
-    }
-
-    function doTurn(skill){
-      if (!combat) return alert("보스를 먼저 소환하세요.");
-      const ps = playerStats(); const bs = bossStats(ps.L);
-      // reduce CDs
-      for (const k in combat.cds){ if (combat.cds[k]>0) combat.cds[k]--; }
-      // compute damage
-      let mult = 1.0, desc="기본 공격";
-      if (skill){
-        if (ps.L < skill.unlockL) return alert(`스킬 미해금 (Lv ${skill.unlockL})`);
-        const remain = combat.cds[skill.id]||0; if (remain>0) return alert(`쿨다운 ${remain}턴`);
-        combat.cds[skill.id] = cdWithPassive(skill.cd);
-        mult = skill.mult||1.0; desc = skill.name;
-        if (skill.effect){
-          if (skill.tag==="xpboost"){
-            const d = store.get(); d.xpBuffUntil = nowTs() + 30*60*1000; store.set(d);
-            updateXPBuffLabel();
-          } else {
-            combat.buffCritTurns = Math.min(2, combat.buffCritTurns + 2);
-          }
-        }
-      }
-      // Weakness bonus
-      const weaknessMult = 1.15; // +15%
-      const dmgBase = ps.atk * mult;
-      const critBonus = combat.buffCritTurns>0 ? 0.2 : 0; if (combat.buffCritTurns>0) combat.buffCritTurns--;
-      const critChance = clamp(ps.critBase + critBonus, 0, 0.5);
-      const isCrit = Math.random() < critChance;
-      let dmg = Math.round(dmgBase * (isCrit?1.8:1.0));
-      // apply weakness randomly 50% chance to simulate exploiting today focus
-      if (Math.random()<0.5) dmg = Math.round(dmg * weaknessMult);
-      combat.bossHP = Math.max(0, combat.bossHP - dmg);
-      let log = getText("combatLog");
-      log += `[턴 ${combat.turn}] ${desc}: ${(isCrit?"크리티컬! ":"")}+${dmg} → 보스 ${combat.bossHP}/${combat.bossMax}\n`;
-      if (combat.bossHP<=0){ setText("combatLog", log); endFight(true); return; }
-      // boss counter
-      const bossDmg = Math.round(bs.atk * (1 + 0.05*Math.random()));
-      combat.pHP = Math.max(0, combat.pHP - bossDmg);
-      log += `보스 반격: -${bossDmg} → 플레이어 ${combat.pHP}/${combat.pMax}\n`;
-      setText("combatLog", log);
-      if (combat.pHP<=0){ endFight(false); return; }
-      combat.turn++; updateBars(); renderSkills();
-    }
-
-    // ===== Inventory & Potions =====
-    function renderInventory(){
-      const inv = document.getElementById('inventory'); const d = store.get(); inv.innerHTML = "";
-      const items = Object.keys(d.inventory);
-      if (items.length===0) { inv.innerHTML = "<span class='tiny'>아이템 없음</span>"; return; }
-      items.forEach(k=>{
-        const n = d.inventory[k]||0;
-        const el = document.createElement("div");
-        el.className="item";
-        const btn = document.createElement("button");
-        btn.className = "btn"; btn.style.padding="6px 10px"; btn.style.fontSize="12px"; btn.textContent="사용";
-        btn.disabled = n<=0;
-        btn.onclick = ()=> useItem(k);
-        el.innerHTML = `<b>${k}</b> × ${n}<div class="tiny">`+itemDesc(k)+`</div>`;
-        el.appendChild(btn);
-        inv.appendChild(el);
-      });
-    }
-    function itemDesc(k){
-      if (k==="집중 포션") return "이번 전투 동안 치확 +10%p";
-      if (k==="힘의 엘릭서") return "이번 전투 동안 ATK +5";
-      if (k==="타임 캡슐") return "30분간 활동 XP +20%";
-      return "";
-    }
-    function useItem(k){
-      const d = store.get(); if ((d.inventory[k]||0)<=0) return;
-      if (k==="집중 포션"){ if (combat){ // buff crit by 10%p
-          const orig = playerStats(); // just to read; we store temp on combat object
-          combat.buffCritTurns += 3; // simulate as extra crit bonus turns
-          setText("combatLog", getText("combatLog")+`[아이템] 집중 포션: 치확 버프 적용(3턴)\n`);
-        } else { alert("전투 중에 사용하세요."); return; } }
-      if (k==="힘의 엘릭서"){ if (combat){
-          combat.pMax += 0; // keep hp
-          // store temp atk bonus
-          combat.tempAtk = (combat.tempAtk||0) + 5;
-          setText("combatLog", getText("combatLog")+`[아이템] 힘의 엘릭서: ATK +5 (전투)\n`);
-        } else { alert("전투 중에 사용하세요."); return; } }
-      if (k==="타임 캡슐"){
-        const d2 = store.get(); d2.xpBuffUntil = nowTs() + 30*60*1000; store.set(d2); updateXPBuffLabel();
-      }
-      d.inventory[k]--; store.set(d); renderInventory();
-    }
-
-    function updateXPBuffLabel(){
-      const d = store.get(); const el = document.getElementById('xpBuffInfo');
-      if ((d.xpBuffUntil||0) > nowTs()){
-        const minLeft = Math.ceil(((d.xpBuffUntil - nowTs())/60000));
-        el.textContent = `경험치 버프 활성: +20% (${minLeft}분 남음)`;
-      } else {
-        el.textContent = `경험치 버프: 없음`;
-      }
-    }
-
-    // ===== SVG Boss =====
-    function drawBossSVG(tier){
-      const svg = document.getElementById('bossSvg'); svg.innerHTML = "";
-      const ns = "http://www.w3.org/2000/svg";
-      function el(n, attrs){ const e=document.createElementNS(ns,n); for(const k in attrs) e.setAttribute(k, attrs[k]); return e; }
-      // body
-      const body = el("ellipse",{ cx:80, cy:70, rx:50+tier*4, ry:35+tier*3, fill:"#1a2130", stroke:"#3a4a6a" });
-      svg.appendChild(body);
-      // eyes
-      const eyeY = 60;
-      svg.appendChild(el("circle",{ cx:65, cy:eyeY, r:6+tier, fill:"#ffcc00" }));
-      svg.appendChild(el("circle",{ cx:95, cy:eyeY, r:6+tier, fill:"#ffcc00" }));
-      // horns
-      svg.appendChild(el("path",{ d:`M50,35 Q60,10 70,35`, stroke:"#9b9eff", "stroke-width":3, fill:"none" }));
-      svg.appendChild(el("path",{ d:`M110,35 Q100,10 90,35`, stroke:"#9b9eff", "stroke-width":3, fill:"none" }));
-      // mouth
-      svg.appendChild(el("path",{ d:`M60,82 Q80,90 100,82`, stroke:"#e35d5b", "stroke-width":3, fill:"none" }));
-      // tier marks
-      for(let i=0;i<tier;i++){ svg.appendChild(el("rect",{ x:10+i*10, y:10, width:6, height:6, fill:"#58a6ff"})); }
-    }
-
-    // ===== UI helpers =====
-    function $(id){ return document.getElementById(id); }
-    function setText(id,t){ $(id).textContent = t; }
-    function getText(id){ return $(id).textContent || ""; }
-    function setBar(txt, bar, cur, max){
-      $(txt).textContent = `${cur} / ${max}`;
-      $(bar).style.width = (max>0? Math.round(100*cur/max):0) + "%";
-    }
-
-    // ===== Render sections =====
-    function renderKPIs(){
-      applyDecay(); updateXPBuffLabel();
-      const d = state; const Linfo = levelFromXP(d.xp, d.cfg.curve);
-      $("levelVal").textContent = Linfo.L; $("xpVal").textContent = Math.round(d.xp);
-      $("streakVal").textContent = d.streak||0; $("spVal").textContent = d.sp||0;
-      const today = dayKey(Date.now()); const day = ensureDay(today);
-      $("todayVal").textContent = Math.round(day.total);
-      $("todayBadge").textContent = `오늘: ${Math.round(day.total)} / 목표 ${d.cfg.dailyGoal}`;
-      $("decayRateTxt").textContent = d.cfg.decayPerHour; $("goalTxt").textContent = d.cfg.dailyGoal; $("capTxt").textContent = d.cfg.dailyCap;
-      const prog = (d.xp - Linfo.prevAt) / Math.max(1, (Linfo.nextAt - Linfo.prevAt));
-      $("progress").style.width = Math.max(3, Math.min(100, Math.round(prog*100))) + "%";
-      $("bossHint").textContent = `오늘 최다 카테고리: ${topCategoryToday()} (약점 +15%)`;
-    }
-
-    function renderActivities(){
-      const d = store.get(); const list = $("actList"); list.innerHTML = "";
-      d.activities.forEach(a=>{
-        const el = document.createElement('div'); el.className='activity';
-        el.innerHTML = `
-          <div style="flex:1">
-            <div style="font-weight:700">${a.name} <span class="cat">[${a.cat}]</span></div>
-            <div class="tiny">기본 <span class="xp">${a.xp} XP</span></div>
-          </div>
-          <button class="btn logbtn">기록</button>
-          <button class="btn secondary logbtn edit">수정</button>
-          <button class="btn warn logbtn del">삭제</button>`;
-        el.querySelector('.logbtn').onclick = ()=> logActivity(a);
-        el.querySelector('.edit').onclick = ()=>{
-          const name = prompt("활동 이름", a.name); if (name===null) return;
-          const xp = Number(prompt("XP 값", a.xp)); if (!name || !Number.isFinite(xp) || xp<=0) return alert("값 확인");
-          const cat = prompt("카테고리 (mind/body/skill/social/recovery)", a.cat||"mind");
-          if (!["mind","body","skill","social","recovery"].includes(cat)) return alert("올바른 카테고리");
-          a.name = name; a.xp = xp; a.cat = cat; store.set(d); renderActivities();
-        };
-        el.querySelector('.del').onclick = ()=>{ if (!confirm("삭제할까요?")) return; d.activities = d.activities.filter(x=>x.id!==a.id); store.set(d); renderActivities(); };
-        list.appendChild(el);
-      });
-    }
-
-    function renderSkills(){
-      const d = store.get(); const L = levelFromXP(d.xp, d.cfg.curve).L; const wrap = $("skills"); wrap.innerHTML = "";
-      Skills.forEach(s=>{
-        const el = document.createElement("div"); const locked = L < s.unlockL;
-        const cdRemain = combat ? (combat.cds[s.id]||0) : 0;
-        el.className = "skill" + (locked? " disabled":"");
-        const cdShow = cdWithPassive(s.cd);
-        el.innerHTML = `
-          <div class="name">${s.name}</div>
-          <div class="meta">${s.desc||""} ${s.effect?(" / 버프:"+s.effect):""}</div>
-          <div class="tiny">해금 Lv ${s.unlockL} · 쿨 ${cdShow}턴</div>
-          <button class="btn use"${locked?" disabled":""}>${cdRemain>0?`대기(${cdRemain})`:"사용"}</button>`;
-        const btn = el.querySelector(".use"); btn.onclick = ()=> doTurn(s); if (cdRemain>0) btn.disabled = true;
-        wrap.appendChild(el);
-      });
-    }
-
-    function renderInventory(){ // populated in startBoss too
-      const d = store.get(); const inv = $("inventory"); if (!inv) return; inv.innerHTML="";
-      Object.keys(d.inventory).forEach(k=>{
-        const n = d.inventory[k]||0;
-        const el = document.createElement("div"); el.className="item";
-        const btn = document.createElement("button"); btn.className="btn"; btn.style.padding="6px 10px"; btn.style.fontSize="12px"; btn.textContent="사용"; btn.disabled=n<=0; btn.onclick=()=>useItem(k);
-        el.innerHTML = `<b>${k}</b> × ${n}<div class="tiny">${itemDesc(k)}</div>`; el.appendChild(btn); inv.appendChild(el);
-      });
-    }
-
-    function updateBars(){
-      const ps = playerStats();
-      const Linfo = levelFromXP(store.get().xp, store.get().cfg.curve);
-      const bs = bossStats(Linfo.L);
-      setBar("pHPtxt","pHP", combat?combat.pHP:ps.hp, ps.hp);
-      setBar("bHPtxt","bHP", combat?combat.bossHP:0, combat?combat.bossMax:bs.hp);
-    }
-
-    function drawChart(){
-      const d = store.get(); const canvas = document.getElementById('chart'); const ctx = canvas.getContext('2d');
-      ctx.clearRect(0,0,canvas.width, canvas.height);
-      const days = []; for(let i=29;i>=0;i--){ days.push(dayKey(Date.now()-i*86400000)); }
-      const vals = days.map(k => d.history[k] ?? 0);
-      const pad = 32, w = canvas.width, h = canvas.height;
-      ctx.strokeStyle = "#223146"; ctx.lineWidth = 1;
-      for(let i=0;i<=4;i++){ const y = pad + (h-2*pad)*(i/4); ctx.beginPath(); ctx.moveTo(pad,y); ctx.lineTo(w-pad,y); ctx.stroke(); }
-      const maxV = Math.max(100, ...vals);
-      ctx.beginPath();
-      vals.forEach((v,i)=>{ const x=pad+(w-2*pad)*(i/(vals.length-1)); const y=h-pad-(h-2*pad)*(v/maxV); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y); });
-      ctx.strokeStyle = "#58a6ff"; ctx.lineWidth = 2; ctx.stroke();
-      ctx.fillStyle = "#3fb950";
-      vals.forEach((v,i)=>{ const x=pad+(w-2*pad)*(i/(vals.length-1)); const y=h-pad-(h-2*pad)*(v/Math.max(1,maxV)); ctx.beginPath(); ctx.arc(x,y,2.5,0,Math.PI*2); ctx.fill(); });
-    }
-
-    // ===== Talent grid UI =====
-    function renderTalentGrid(){
-      const d = store.get(); recalcPassives();
-      const grid = document.getElementById('talentGrid'); grid.innerHTML = "";
-      const groups = ["생산성","유틸리티","전투"];
-      groups.forEach(g=>{
-        const box = document.createElement("div"); box.className="talent";
-        const list = Talents.filter(t=>t.group===g);
-        const inner = list.map(t=>{
-          const r = d.talents[t.id]||0;
-          return `
-            <div>
-              <div class="tname">${t.name} <span class="rank">[${r}/${t.max}]</span></div>
-              <div class="meta">${t.desc}${t.cost>1?` · 비용 ${t.cost}SP`:``}</div>
-              <div class="row" style="margin-top:6px">
-                <button class="btn" data-tid="${t.id}" ${r>=t.max || d.sp < t.cost ? "disabled":""}>해금/강화</button>
-                <button class="btn secondary" data-tr="${t.id}" ${r<=0?"disabled":""}>랭크-1</button>
-              </div>
-            </div>
-            <hr style="border:none;border-top:1px solid #223146;margin:8px 0">`;
-        }).join("");
-        box.innerHTML = `<div class="tname">${g}</div><div style="margin-top:6px">${inner}</div>`;
-        grid.appendChild(box);
-      });
-      grid.querySelectorAll("button[data-tid]").forEach(btn=>{
-        btn.onclick = ()=>{
-          const id = btn.getAttribute("data-tid"); const t = Talents.find(x=>x.id===id);
-          const d = store.get(); const r = d.talents[id]||0; if (r>=t.max || (d.sp||0)<t.cost) return;
-          d.talents[id] = r+1; d.sp -= t.cost; store.set(d); recalcPassives(); renderAll();
-        };
-      });
-      grid.querySelectorAll("button[data-tr]").forEach(btn=>{
-        btn.onclick = ()=>{
-          const id = btn.getAttribute("data-tr"); const t = Talents.find(x=>x.id===id);
-          const d = store.get(); const r = d.talents[id]||0; if (r<=0) return;
-          d.talents[id] = r-1; d.sp += t.cost; if (d.talents[id]<=0) delete d.talents[id];
-          store.set(d); recalcPassives(); renderAll();
-        };
-      });
-      document.getElementById('spBadge').textContent = d.sp||0;
-      document.getElementById('spVal').textContent = d.sp||0;
-    }
-
-    // ===== Settings & events =====
-    document.getElementById('saveCfg').onclick = ()=>{
-      const d = store.get();
-      const curve = $("curveSel").value;
-      const decay = Number($("decayPerHour").value);
-      const goal = Number($("dailyGoal").value);
-      const cap = Number($("dailyCap").value);
-      if (!Number.isFinite(decay)||decay<0) return alert("감소율 확인");
-      if (!Number.isFinite(goal)||goal<0) return alert("목표 확인");
-      if (!Number.isFinite(cap)||cap<0) return alert("소프트캡 확인");
-      d.cfg.curve = curve; d.cfg.decayPerHour = decay; d.cfg.dailyGoal = goal; d.cfg.dailyCap = cap;
-      store.set(d); state = d; renderAll();
-    };
-    document.getElementById('decayNow').onclick = ()=>{ applyDecay(); renderAll(); };
-    document.getElementById('hardReset').onclick = ()=>{
-      if(!confirm("모든 데이터를 초기화합니다.")) return;
-      localStorage.removeItem('sdrpg_v5'); state = initState(); renderAll();
-    };
-    document.getElementById('addAct').onclick = ()=>{
-      const name = $("newName").value.trim(); const xp = Number($("newXP").value); const cat = $("newCat").value;
-      if (!name || !Number.isFinite(xp) || xp<=0) return alert("이름/XP 확인");
-      const d = store.get(); d.activities.push({ id: crypto.randomUUID(), name, xp, cat, lastLog:0 }); store.set(d);
-      $("newName").value=""; $("newXP").value=30; $("newCat").value="mind"; renderActivities();
-    };
-    document.getElementById('startBoss').onclick = startBoss;
-
-    // ===== Render all =====
-    function renderAll(){ renderKPIs(); renderActivities(); renderSkills(); updateBars(); renderTalentGrid(); renderInventory(); drawChart(); }
-    setInterval(()=>{
-      const prevDay = state.__prevDay || dayKey(Date.now());
-      applyDecay();
-      const today = dayKey(Date.now());
-      if (today !== prevDay){ endOfDayProcess(prevDay); state.__prevDay = today; }
-      renderAll();
-    }, 60000);
-
-    // ===== initial =====
-    renderAll();
+    const $ = (id)=>document.getElementById(id);
+    const store = { get(){ try{return JSON.parse(localStorage.getItem(storeKey)||'{}')}catch(e){return {}} }, set(d){ localStorage.setItem(storeKey, JSON.stringify(d)); } };
+    const defaults = { xp:0, lastUpdate:nowTs(), lastActivityDay:dayKey(nowTs()), lastLevel:1, sp:0, streak:0, missStreak:0, weeklyHits:{}, history:{}, daily:{}, badges:[], cfg:{curve:'quad', decayPerHour:4, dailyGoal:180, dailyCap:480}, talents:{}, passives:{decayDown:0,capUp:0,metaBonus:0,xpGlobal:0, bossAtkUp:0,critUp:0,cdReduce:0}, inventory:{}, xpBuffUntil:0, __prevDay: dayKey(nowTs()) };
+    let state = init(); function init(){ let d=store.get(); if(!Object.keys(d).length){ store.set(defaults); d=defaults; } d.cfg={...defaults.cfg, ...(d.cfg||{})}; d.__prevDay ||= dayKey(nowTs()); store.set(d); return d; }
+    function levelFromXP(xp, curve){ if(curve==='lin'){const L=Math.max(1,Math.floor(xp/100)+1);return {L,prevAt:(L-1)*100,nextAt:L*100};} if(curve==='exp'){let L=1,next=120,acc=0;while(acc+next<=xp&&L<200){acc+=next;L++;next=Math.round(next*1.4);}return {L,prevAt:acc,nextAt:acc+next};} let L=1;while(100*(L**2)<=xp&&L<999){L++;}return {L,prevAt:100*((L-1)**2),nextAt:100*(L**2)}; }
+    const GOAL_BONUS=0.2, INACTIVITY=20, SOFTCAP_RATE=0.5;
+    function applyDecay(){ const d=store.get(); const now=nowTs(); const hours=(now-(d.lastUpdate||now))/3600000; const dec=Math.max(0, hours*(d.cfg.decayPerHour||0)*(1-0.1*(d.passives.decayDown||0))); d.xp=Math.max(0,d.xp-dec); d.lastUpdate=now; store.set(d); state=d; }
+    function ensureDay(k){ const d=store.get(); d.daily[k]=d.daily[k]||{total:0,catTotals:{},logs:0}; store.set(d); return d.daily[k]; }
+    function endOfDayProcess(k){ const d=store.get(); const day=d.daily[k]||{total:0,logs:0}; const goal=d.cfg.dailyGoal||180; const meta=(d.passives.metaBonus||0)*0.05; if(day.total>=goal){ d.xp+=goal*(GOAL_BONUS+meta); d.weeklyHits[k]=true; d.missStreak=0; } else { d.missStreak=(d.missStreak||0)+1; if(day.logs===0) d.xp=Math.max(0,d.xp-INACTIVITY); if(d.missStreak>=3){ const L=levelFromXP(d.xp,d.cfg.curve); const lower=L.L>2?levelFromXP(L.prevAt-1,d.cfg.curve).prevAt:0; d.xp=Math.max(lower,L.prevAt); d.missStreak=0; } } d.history[k]=Math.round(d.xp); store.set(d); state=d; }
+    function backfill(){ const d=store.get(); let cur=d.__prevDay||dayKey(nowTs()); const today=dayKey(nowTs()); let guard=0; while(cur<today && guard<35){ endOfDayProcess(cur); cur=dayKey(new Date(cur).getTime()+86400000); guard++; } d.__prevDay=today; store.set(d); state=d; }
+    function calcXP(type, metric, intensity=1){ const m=Number(metric||0), i=Number(intensity||1); const rules={study:(m/10)*i*2, workout:(m/8)*i*2, meditation:(m/5)*1.5, reading:(m/5), project:(m/10)*5, journaling:(m*8), routine:20}; return Math.round(rules[type]||0); }
+    const CAT_MULT={mind:1.10, body:1.08, spirit:1.05, create:1.12, social:1.07, reflect:1.15, system:1.05, finance:1.06, persona:1.08, recovery:1.05};
+    function applyXP(cat, baseXP){ applyDecay(); const d=store.get(); const today=dayKey(nowTs()); const day=ensureDay(today); let xp=baseXP*(CAT_MULT[cat]||1); const cap=(d.cfg.dailyCap||480)+50*(d.passives.capUp||0); const room=Math.max(0,cap-day.total); if(xp>room) xp=room+(xp-room)*SOFTCAP_RATE; d.xp+=xp; day.total+=xp; day.catTotals[cat]=(day.catTotals[cat]||0)+xp; day.logs++; if(d.lastActivityDay!==today){ const y=dayKey(Date.now()-86400000); d.streak=(d.lastActivityDay===y)?(d.streak||0)+1:1; d.lastActivityDay=today; } d.history[today]=Math.round(d.xp); store.set(d); state=d; renderAll(); alert('+'+Math.round(xp)+' XP'); }
+    function renderKPIs(){ applyDecay(); const d=store.get(); const L=levelFromXP(d.xp,d.cfg.curve); $('#levelVal').textContent=L.L; $('#xpVal').textContent=Math.round(d.xp); $('#streakVal').textContent=d.streak||0; $('#spVal').textContent=d.sp||0; const today=dayKey(Date.now()); const day=ensureDay(today); $('#todayVal').textContent=Math.round(day.total); $('#todayBadge').textContent='오늘: '+Math.round(day.total)+' / 목표 '+d.cfg.dailyGoal; $('#decayRateTxt').textContent=d.cfg.decayPerHour; $('#goalTxt').textContent=d.cfg.dailyGoal; $('#capTxt').textContent=d.cfg.dailyCap; document.getElementById('progress').style.width = Math.max(3,Math.min(100,Math.round(100*(d.xp-L.prevAt)/Math.max(1,L.nextAt-L.prevAt))))+'%'; }
+    function renderLogs(){ const d=store.get(); const list=$('logList'); const today=dayKey(Date.now()); const day=d.daily[today]||{catTotals:{}}; list.innerHTML=''; const cats=Object.keys(day.catTotals); if(!cats.length){ list.innerHTML='<div class="mini">아직 기록 없음</div>'; return;} cats.forEach(k=>{ const el=document.createElement('div'); el.className='activity'; el.innerHTML='<div style="flex:1"><b>'+k+'</b><div class="mini">오늘 누적: <span class="xp">'+Math.round(day.catTotals[k])+' XP</span></div></div>'; list.appendChild(el); }); }
+    function chart(){ const c=document.getElementById('chart'); const x=c.getContext('2d'); x.clearRect(0,0,c.width,c.height); const days=[]; for(let i=29;i>=0;i--) days.push(dayKey(Date.now()-i*86400000)); const vals=days.map(k=>store.get().history[k]||0); const pad=28,w=c.width,h=c.height; x.strokeStyle='#223146'; for(let i=0;i<=4;i++){const y=pad+(h-2*pad)*(i/4); x.beginPath(); x.moveTo(pad,y); x.lineTo(w-pad,y); x.stroke();} const max=Math.max(100,...vals); x.beginPath(); vals.forEach((v,i)=>{const X=pad+(w-2*pad)*(i/(vals.length-1)); const Y=h-pad-(h-2*pad)*(v/max); if(i===0)x.moveTo(X,Y); else x.lineTo(X,Y);}); x.strokeStyle='#61c0ff'; x.lineWidth=2; x.stroke(); }
+    function renderAll(){ renderKPIs(); renderLogs(); chart(); }
+    document.getElementById('openCalc').onclick=()=>{$('modalCalc').style.display='flex'}; document.getElementById('closeCalc').onclick=()=>{$('modalCalc').style.display='none'};
+    document.getElementById('openFree').onclick=()=>{$('modalFree').style.display='flex'}; document.getElementById('closeFree').onclick=()=>{$('modalFree').style.display='none'};
+    document.getElementById('calcSubmit').onclick=()=>{ const xp=calcXP(document.getElementById('calcType').value, document.getElementById('metric').value, document.getElementById('intensity').value); const cat=document.getElementById('calcCat').value; applyXP(cat, ((store.get().xpBuffUntil||0)>nowTs())?xp*1.2:xp); document.getElementById('modalCalc').style.display='none'; };
+    document.getElementById('freeSubmit').onclick=()=>{ const name=document.getElementById('freeName').value.trim(); const cat=document.getElementById('freeCat').value; const xp=Number(document.getElementById('freeXP').value||0); if(!name||!Number.isFinite(xp)) return alert('이름/XP 확인'); applyXP(cat, xp); document.getElementById('modalFree').style.display='none'; document.getElementById('freeName').value=''; document.getElementById('freeXP').value=''; };
+    document.getElementById('saveCfg').onclick=()=>{ const d=store.get(); d.cfg.curve=document.getElementById('curveSel').value; d.cfg.decayPerHour=Number(document.getElementById('decayPerHour').value)||0; d.cfg.dailyGoal=Number(document.getElementById('dailyGoal').value)||0; d.cfg.dailyCap=Number(document.getElementById('dailyCap').value)||0; store.set(d); state=d; renderAll(); };
+    document.getElementById('decayNow').onclick=()=>{applyDecay(); renderAll();};
+    document.getElementById('hardReset').onclick=()=>{ if(!confirm('모든 데이터를 초기화합니다.')) return; localStorage.removeItem(storeKey); state=init(); renderAll(); };
+    setInterval(()=>{ const prev=state.__prevDay||dayKey(Date.now()); applyDecay(); const today=dayKey(Date.now()); if(today!==prev){ endOfDayProcess(prev); state.__prevDay=today; store.set(state);} renderAll(); }, 60000);
+    backfill(); renderAll();
+    if('serviceWorker' in navigator){ addEventListener('load', async ()=>{ try{ await navigator.serviceWorker.register('/power/service-worker.js',{scope:'/power/'});}catch(e){} }); }
   </script>
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      addEventListener('load', async () => {
-        try {
-          await navigator.serviceWorker.register('./service-worker.js');
-          console.log('SW registered');
-        } catch (e) { console.log('SW registration failed', e); }
-      });
-    }
-  </script>
-
 </body>
 </html>

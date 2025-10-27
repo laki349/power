@@ -1,33 +1,42 @@
-const CACHE_NAME = 'selfdev-rpg-v5';
-const CORE = [
-  './',
-  './index.html',
-  './manifest.webmanifest',
-  './icons/icon-192.png',
-  './icons/icon-512.png'
-];
 
-self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(CORE)));
+const CACHE = 'sdrpg-v6-power';
+const SCOPE = '/power/';
+const CORE = [SCOPE, SCOPE+'index.html', SCOPE+'manifest.webmanifest', SCOPE+'icons/icon-192.png', SCOPE+'icons/icon-512.png'];
+
+self.addEventListener('install', e=>{
+  e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));
 });
-
-self.addEventListener('activate', (e) => {
-  e.waitUntil(self.clients.claim());
-});
-
-self.addEventListener('fetch', (e) => {
-  e.respondWith((async () => {
-    const cached = await caches.match(e.request);
-    if (cached) return cached;
-    try {
-      const resp = await fetch(e.request);
-      const cache = await caches.open(CACHE_NAME);
-      if (e.request.method === 'GET' && resp && resp.status === 200) {
-        cache.put(e.request, resp.clone());
-      }
-      return resp;
-    } catch (err) {
-      return cached || Response.error();
-    }
+self.addEventListener('activate', e=>{
+  e.waitUntil((async()=>{
+    const keys=await caches.keys();
+    await Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)));
+    await self.clients.claim();
   })());
+});
+self.addEventListener('fetch', e=>{
+  const req=e.request;
+  if(req.mode==='navigate'){
+    e.respondWith((async()=>{
+      try{
+        const net=await fetch(req);
+        (await caches.open(CACHE)).put(SCOPE+'index.html', net.clone());
+        return net;
+      }catch(err){
+        const cached=await caches.match(SCOPE+'index.html');
+        return cached || Response.error();
+      }
+    })());
+    return;
+  }
+  if(req.method==='GET'){
+    e.respondWith((async()=>{
+      const cached=await caches.match(req);
+      if(cached) return cached;
+      try{
+        const resp=await fetch(req);
+        if(resp && resp.status===200) (await caches.open(CACHE)).put(req, resp.clone());
+        return resp;
+      }catch(err){ return Response.error(); }
+    })());
+  }
 });
